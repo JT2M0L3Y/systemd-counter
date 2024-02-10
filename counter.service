@@ -1,3 +1,17 @@
 # This is the systemd service file that you'll need to configure and install in the /lib/systemd/system/ directory so that systemd will know you to launch/start/stop your counter service.
 
+# info about service (name, desc, dependencies)
+[Unit]
+Description=counter
+After=network.target
 
+# info about executing the service (start, stop, user, group)
+[Service]
+User=counter
+Group=counter
+ExecStart=/usr/bin/counter
+Restart=always
+
+# info about install/activate (run levels for start and stop)
+[Install]
+WantedBy=multi-user.target
