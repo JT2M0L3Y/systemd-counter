@@ -10,23 +10,52 @@ package main
 
 import (
 	"fmt"
+	"time"
 	"os"
 	"os/user"
-	"time"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
-	file, err := os.Create("/tmp/counter.out") 
 	counter := 0
 	usr, err := user.Current()
+
+	// create a channel for signals, track sigint and sigterm
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
+	// create file to write to
+	file, err := os.Create("/tmp/counter.out") 
 
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 		return
 	}
 
-	// defer closing file until end of function
+	// defer closing file until end
 	defer file.Close()
+
+	go func() {
+		var sigType string
+
+		// wait for signal type
+		switch <-sigs {
+		case syscall.SIGINT:
+			sigType = "SIGINT"
+		case syscall.SIGTERM:
+			sigType = "SIGTERM"
+		}
+		
+		// print signal type received
+		fmt.Printf(" %s received, exiting...\n", sigType)
+		fmt.Fprintf(file, " %s received, exiting...\n", sigType)
+
+		// flush output streams, exit
+		os.Stdout.Sync()
+		file.Sync()
+		os.Exit(0)
+	}()
 
 	for {
 		// get date and time and format as 2006-01-02 15:04:05
@@ -43,7 +72,10 @@ func main() {
 			return
 		}
 
-		time.Sleep(1 * time.Second)
+		os.Stdout.Sync()
 		counter++
+
+		// sleep for 1 second
+		time.Sleep(1 * time.Second)
 	}
 }
