@@ -27,7 +27,7 @@ func main() {
 	signal.Notify(sigs, syscall.SIGTERM)
 
 	// create file to write to
-	file, err := os.Create("/tmp/counter.out") 
+	file, err := os.Create("/tmp/currentCount.out") 
 
 	if err != nil {
 		fmt.Println("Error creating file:", err)
