@@ -1,5 +1,5 @@
 # Service: count every second and write it to a file
-# Date: 2024-02-10
+# Date: 2024-02-12
 # Author: JT2M0L3Y
 # Course: CPSC 334
 
@@ -10,7 +10,7 @@ After=network.target
 [Service]
 User=counter
 Group=counter
-ExecStart=/usr/bin/go run /usr/bin/counter.go
+ExecStart=/usr/bin/go run ./bin/counter.go
 Restart=always
 RestartSec=2
 

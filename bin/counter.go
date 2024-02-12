@@ -1,7 +1,7 @@
 /*
  * file: counter.go
  * author: JT2M0L3Y
- * date: 2024-02-10
+ * date: 2024-02-12
  * description: Create file 
  * and write to it every second
  */
