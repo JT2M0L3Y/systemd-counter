@@ -12,18 +12,18 @@ import (
 	"fmt"
 	"time"
 	"os"
-	"os/user"
+	// "os/user"
 	"os/signal"
 	"syscall"
 )
 
 func main() {
 	counter := 0
-	usr, err := user.Current()
+	// usr, err := user.Current()
+	usr := "smoley"
 
 	// create a channel for signals, track sigint and sigterm
 	sigs := make(chan os.Signal, 1)
-	// signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	signal.Notify(sigs, syscall.SIGTERM)
 
 	// create file to write to
@@ -42,8 +42,6 @@ func main() {
 
 		// wait for signal type
 		switch <-sigs {
-		// case syscall.SIGINT:
-		// 	sigType = "SIGINT"
 		case syscall.SIGTERM:
 			sigType = "SIGTERM"
 		}
@@ -63,10 +61,10 @@ func main() {
 		dateTime := time.Now().Format(time.DateTime)
 
 		// write data to file as: username, date, time, count
-		_, err = fmt.Fprintf(file, "%s: %s #%d\n", usr.Username, dateTime, counter)
+		_, err = fmt.Fprintf(file, "%s: %s #%d\n", usr, dateTime, counter)
 
 		// write data to console the same as file
-		fmt.Printf("%s: %s #%d\n", usr.Username, dateTime, counter)
+		fmt.Printf("%s: %s #%d\n", usr, dateTime, counter)
 
 		if err != nil {
 			fmt.Println("Error writing to file:", err)
