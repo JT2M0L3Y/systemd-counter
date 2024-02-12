@@ -23,7 +23,8 @@ func main() {
 
 	// create a channel for signals, track sigint and sigterm
 	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+	// signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(sigs, syscall.SIGTERM)
 
 	// create file to write to
 	file, err := os.Create("/tmp/counter.out") 
@@ -41,8 +42,8 @@ func main() {
 
 		// wait for signal type
 		switch <-sigs {
-		case syscall.SIGINT:
-			sigType = "SIGINT"
+		// case syscall.SIGINT:
+		// 	sigType = "SIGINT"
 		case syscall.SIGTERM:
 			sigType = "SIGTERM"
 		}

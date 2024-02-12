@@ -4,13 +4,13 @@
 # Course: CPSC 334
 
 [Unit]
-Description=counter
+Description=writes seconds to file
 After=network.target
 
 [Service]
-User=counter
-Group=counter
-ExecStart=/usr/bin/counter
+User=root
+Group=root
+ExecStart=/usr/bin/go run /usr/bin/counter.go
 Restart=always
 RestartSec=2
 
