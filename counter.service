@@ -10,7 +10,7 @@ After=network.target
 [Service]
 User=counter
 Group=counter
-ExecStart=/usr/local/go/bin/go run ./bin/counter.go
+ExecStart=/usr/local/go/bin/go run /bin/counter.go
 Restart=always
 RestartSec=3
 
