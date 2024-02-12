@@ -8,8 +8,8 @@ Description=writes seconds to file
 After=network.target
 
 [Service]
-User=root
-Group=root
+User=counter
+Group=counter
 ExecStart=/usr/bin/go run /usr/bin/counter.go
 Restart=always
 RestartSec=2
