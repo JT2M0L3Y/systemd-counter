@@ -1,6 +1,10 @@
+GOPATH=$(shell go env GOPATH)
+GODEP_BIN=$(GOPATH)/bin/dep
+GOLINT=$(GOPATH)/bin/golint
+VERSION=${shell cat VERSION}-$(shell git rev-parse --short HEAD)
 BINARY_NAME=counter
 OUT_FILE=/tmp/currentCount.out
-BUILD_SCRIPT=build-dev.sh
+BUILD_SCRIPT=build-deb.sh
 
 build:
 	GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME} ${BINARY_NAME}.go
@@ -19,5 +23,6 @@ clean:
 	[ -e bin/test3.out ] && rm bin/test3.out || true
 
 build-deb:
+	./${BUILD_SCRIPT}
 
 lint-deb:
