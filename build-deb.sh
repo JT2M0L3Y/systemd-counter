@@ -28,5 +28,6 @@ cp counter.service $TEMP_DIR/lib/systemd/system/
 echo "Building deb file"
 dpkg-deb --root-owner-group --build $TEMP_DIR
 mv $TEMP_DIR.deb counter-v2.0.0.deb
+rm -rf $TEMP_DIR
 
 echo "Complete."

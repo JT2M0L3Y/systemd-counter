@@ -9,3 +9,6 @@ systemctl daemon-reload
 
 # remove counter user
 userdel counter
+
+# remove output file
+rm /tmp/currentCount.out
