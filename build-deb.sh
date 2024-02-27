@@ -1,35 +1,32 @@
 #!/bin/bash
-set -xe
 
-BUILD_ARTIFACTS_DIR="artifacts"
-version=`git rev-parse --short HEAD`
-VERSION_STRING="$(cat VERSION)-${version}"
+TEMP_DIR="temp"
 
-# check env vars
-[ -z "$BINARY_NAME" ] && echo "BINARY_NAME is not set" && exit 1;
-[ -z "$DPKG_NAME" ] && echo "DPKG_NAME is not set" && exit 1;
-[ -z "$DPKG_DESC" ] && echo "DPKG_DESC is not set" && exit 1;
+echo "Starting deb package build"
 
-if which go; then
-  make build BINARY_NAME=${BINARY_NAME}
-  echo "Binary built. Building debian package..."
-else
-  echo "Go is not installed or not reachable. Exiting..."
-  exit 1
-fi
+# Create the directory structure for the debian package
+echo "Creating temporary directory tree"
+mkdir -p $TEMP_DIR
+mkdir -p $TEMP_DIR/DEBIAN
+mkdir -p $TEMP_DIR/usr/bin
+mkdir -p $TEMP_DIR/lib/systemd/system
 
-# create debian package
-mkdir -p $BUILD_ARTIFACTS_DIR && cp $BINARY_NAME $BUILD_ARTIFACTS_DIR
-if which fpm; then
-  fpm --output-type deb \
-    --input-type dir --chdir /$BUILD_ARTIFACTS_DIR \
-    --prefix /usr/bin --name $BINARY_NAME \
-    --version $VERSION_STRING \
-    --description `${DPKG_DESC}` \
-    -p ${DPKG_NAME}-${VERSION_STRING}.deb \
-    $BINARY_NAME && cp *.deb /$BUILD_ARTIFACTS_DIR/
-  rm -f $BUILD_ARTIFACTS_DIR/$BINARY_NAME
-else
-  echo "fpm is not installed or not reachable. Exiting..."
-  exit 1
-fi
+# Create the control file
+echo "Creating control file for DEBIAN/"
+cp DEBIAN/control $TEMP_DIR/DEBIAN/control
+chmod 775 $TEMP_DIR/DEBIAN/control
+
+# Copy the binary into place
+echo "Copying binary into place"
+cp bin/counter $TEMP_DIR/usr/bin/
+
+# Copy the service file into place
+echo "Copying service file into place"
+cp counter.service $TEMP_DIR/lib/systemd/system/
+
+# Build the debian package
+echo "Building deb file"
+dpkg-deb --root-owner-group --build $TEMP_DIR
+mv $TEMP_DIR.deb counter-v2.0.0.deb
+
+echo "Complete."

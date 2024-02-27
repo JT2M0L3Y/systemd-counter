@@ -1,7 +1,7 @@
 /*
  * file: counter.go
  * author: JT2M0L3Y
- * date: 2024-02-21
+ * date: 2024-02-23
  * description: Create file 
  * and write to it every second
  */
@@ -12,18 +12,22 @@ import (
 	"fmt"
 	"time"
 	"os"
-	// "os/user"
 	"os/signal"
 	"syscall"
 )
 
 func main() {
 	counter := 0
-	// usr, err := user.Current()
 	usr := "smoley"
 
-	// create file to write to
-	file := createFile("/tmp/currentCount.out")
+	// open file for overwriting if it exists, create it if it doesn't
+	file, err := os.OpenFile("/tmp/currentCount.out", os.O_RDWR|os.O_CREATE|os.O_EXCL, 0770)
+	
+
+	// if file doesn't exist, create it
+	if err != nil {
+		file = createFile("/tmp/currentCount.out")
+	}
 
 	// create a channel for signals, track sigint and sigterm
 	setSigs(file)
@@ -33,7 +37,7 @@ func main() {
 		dateTime := time.Now().Format(time.DateTime)
 
 		// write data to file as: username, date, time, count
-		writeData(file, usr, dateTime, counter, false)
+		writeData(file, usr, dateTime, counter)
 
 		os.Stdout.Sync()
 		counter++
@@ -68,8 +72,6 @@ func setSigs(file *os.File) {
 		file.Close()
 		os.Exit(0)
 	}()
-
-	return
 }
 
 func createFile(name string) *os.File {
@@ -81,10 +83,7 @@ func createFile(name string) *os.File {
 	return file
 }
 
-func writeData(file *os.File, usr string, dateTime string, counter int, test bool) {
-	if test != true {
-		fmt.Printf("%s: %s #%d\n", usr, dateTime, counter)
-	}
+func writeData(file *os.File, usr string, dateTime string, counter int) {
 	_, err := file.WriteString(fmt.Sprintf("%s: %s #%d\n", usr, dateTime, counter))
 	if err != nil {
 		fmt.Println("Error writing to file:", err)

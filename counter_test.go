@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -20,7 +21,7 @@ func TestWriteData(t *testing.T) {
 	dateTime := "2024-02-21 15:04:05"
 	counter := 0
 
-	writeData(file, usr, dateTime, counter, true)
+	writeData(file, usr, dateTime, counter)
 
 	file.Close()
 }
