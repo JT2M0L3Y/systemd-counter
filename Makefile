@@ -18,7 +18,7 @@ clean:
 	[ -e ${OUT_FILE} ] && rm ${OUT_FILE} || true
 	[ -e bin/${BINARY_NAME} ] && rm bin/${BINARY_NAME} || true
 
-build-deb:
+build-deb: build
 	./${BUILD_SCRIPT}
 
 lint-deb:
