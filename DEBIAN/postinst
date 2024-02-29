@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Starting counter service"
+echo "Starting postinst script"
 
 adduser --system --no-create-home --disabled-login counter
 
@@ -14,4 +14,4 @@ systemctl start counter
 
 systemctl enable counter
 
-echo "Complete."
+echo "Completed postinst."

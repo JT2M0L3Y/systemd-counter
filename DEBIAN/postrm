@@ -1,9 +1,11 @@
 #!/bin/bash
 
-echo "Cleaning up counter service"
+echo "Starting postrm script"
 
 systemctl daemon-reload
 
 rm /tmp/currentCount.out
 
 userdel counter
+
+echo "Completed postrm script."

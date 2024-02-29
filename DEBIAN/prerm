@@ -1,7 +1,9 @@
 #!/bin/bash
 
-echo "Stopping counter service"
+echo "Starting prerm script"
 
 systemctl disable counter
 
 systemctl stop counter
+
+echo "Completed prerm script."
