@@ -2,11 +2,14 @@
 
 echo "Starting postinst script"
 
-adduser --system --no-create-home --disabled-login counter
+adduser --system --no-create-home --disabled-login --group counter
+echo "created user counter"
 
-chown counter /usr/bin/counter
+chown counter:counter /usr/bin/counter
+echo "changed owner of /usr/bin/counter to counter:counter"
 
-chown counter /lib/systemd/system/counter.service
+chown counter:counter /lib/systemd/system/counter.service
+echo "changed owner of /lib/systemd/system/counter.service to counter:counter"
 
 systemctl daemon-reload
 

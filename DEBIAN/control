@@ -4,5 +4,4 @@ Section: utils
 Priority: optional
 Architecture: all
 Maintainer: JT2M0L3Y <jsmoley@zagmail.gonzaga.edu>
-Description: Systemd service to count seconds
-  and write them to a file.
+Description: Systemd service to count seconds in file.
