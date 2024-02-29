@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,6 +12,7 @@ func TestCreateFile(t *testing.T) {
 	assert.NotNil(t, file)
 
 	file.Close()
+	os.Remove(file.Name())
 }
 
 func TestWriteData(t *testing.T) {
@@ -24,6 +26,7 @@ func TestWriteData(t *testing.T) {
 	writeData(file, usr, dateTime, counter)
 
 	file.Close()
+	os.Remove(file.Name())
 }
 
 func TestSetSigs(t *testing.T) {
@@ -33,4 +36,5 @@ func TestSetSigs(t *testing.T) {
 	setSigs(file)
 
 	file.Close()
+	os.Remove(file.Name())
 }

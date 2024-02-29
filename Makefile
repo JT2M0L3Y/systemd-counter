@@ -1,3 +1,6 @@
+# Author: Jonathan Smoley (JT2M0L3Y)
+# Date: 2024-02-28
+
 BINARY_NAME=counter
 OUT_FILE=/tmp/currentCount.out
 BUILD_SCRIPT=build-deb.sh
@@ -14,12 +17,9 @@ run: build
 clean:
 	[ -e ${OUT_FILE} ] && rm ${OUT_FILE} || true
 	[ -e bin/${BINARY_NAME} ] && rm bin/${BINARY_NAME} || true
-	[ -e bin/test.out ] && rm bin/test.out || true
-	[ -e bin/test2.out ] && rm bin/test2.out || true
-	[ -e bin/test3.out ] && rm bin/test3.out || true
 
-build-deb: build
+build-deb:
 	./${BUILD_SCRIPT}
 
-lint-deb: build-deb
-	
+lint-deb:
+	lintian ${BINARY_NAME}-v2.0.0.deb	

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Cleaning up counter service"
+
+systemctl daemon-reload
+
+rm /tmp/currentCount.out
+
+userdel counter

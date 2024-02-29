@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "Starting counter service"
+
+adduser --system --no-create-home --disabled-login counter
+
+chown counter /usr/bin/counter
+
+chown counter /lib/systemd/system/counter.service
+
+systemctl daemon-reload
+
+systemctl start counter
+
+systemctl enable counter
+
+echo "Complete."
