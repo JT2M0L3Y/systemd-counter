@@ -47,4 +47,4 @@ jobs:
           sudo apt-get install -y lintian
       - name: Lint debian package
         run: |
-          -lintian counter-v2.0.0.deb
+          make lint-deb

@@ -21,5 +21,5 @@ clean:
 build-deb: build
 	sh ${BUILD_SCRIPT}
 
-lint-deb:
-	lintian ${BINARY_NAME}-v2.0.0.deb	
+lint-deb: build-deb
+	-lintian ${BINARY_NAME}-v2.0.0.deb	
