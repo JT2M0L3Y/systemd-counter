@@ -13,9 +13,9 @@ jobs:
       - name: Build binary
         run: |
           make build
-      - name: Print latest local change
+      - name: Check if new binary is different
         run: |
-          git log -1 --pretty=format:"%h - %an, %ar : %s"
+          git diff --exit-code
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -25,9 +25,6 @@ jobs:
       - name: Run tests
         run: |
           make test
-      - name: Print latest local change
-        run: |
-          git log -1 --pretty=format:"%h - %an, %ar : %s"
   package:
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -38,9 +35,9 @@ jobs:
       - name: Build debian package
         run: |
           make build-deb
-      - name: Print latest local change
+      - name: Check if package was build
         run: |
-          git log -1 --pretty=format:"%h - %an, %ar : %s"
+          ls -l counter-v2.0.0.deb
   artifact:
     runs-on: ubuntu-latest
     timeout-minutes: 2
