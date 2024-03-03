@@ -19,7 +19,7 @@ clean:
 	[ -e bin/${BINARY_NAME} ] && rm bin/${BINARY_NAME} || true
 
 build-deb: build
-	./${BUILD_SCRIPT}
+	sh ${BUILD_SCRIPT}
 
 lint-deb:
 	lintian ${BINARY_NAME}-v2.0.0.deb	
