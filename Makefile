@@ -1,5 +1,5 @@
 # Author: Jonathan Smoley (JT2M0L3Y)
-# Date: 2024-03-02
+# Date: 2024-03-03
 
 BINARY_NAME=counter
 OUT_FILE=/tmp/currentCount.out
