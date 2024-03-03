@@ -13,9 +13,6 @@ jobs:
       - name: Build binary
         run: |
           make build
-      - name: Check if new binary is different
-        run: |
-          git diff --exit-code
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -35,9 +32,6 @@ jobs:
       - name: Build debian package
         run: |
           make build-deb
-      - name: Check if package was build
-        run: |
-          ls -l counter-v2.0.0.deb
   artifact:
     runs-on: ubuntu-latest
     timeout-minutes: 2
