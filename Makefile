@@ -1,12 +1,11 @@
 # Author: Jonathan Smoley (JT2M0L3Y)
-# Date: 2024-02-28
+# Date: 2024-03-02
 
 BINARY_NAME=counter
 OUT_FILE=/tmp/currentCount.out
 BUILD_SCRIPT=build-deb.sh
 
 build:
-# echo "No build required for Go (event though it's possible)."
 	GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME} ${BINARY_NAME}.go
 
 test:

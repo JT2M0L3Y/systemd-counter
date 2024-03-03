@@ -1,14 +1,11 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 📯
+name: Systemd Counter Debian Packaging
+# run-name: ${{ github.actor }} is testing out GitHub Actions 📯
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - run: echo "🙌 This job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🏠 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🌿 This name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Build project
@@ -26,9 +23,6 @@ jobs:
           name: counter-v2.0.0
           path: |
             counter-v2.0.0.deb
-      - name: Unpack debian package
-        run: |
-          dpkg-deb -x counter-v2.0.0.deb counter
       - name: Lint debian package
         run: |
           -lintian counter-v2.0.0.deb
