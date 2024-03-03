@@ -13,6 +13,9 @@ jobs:
       - name: Build binary
         run: |
           make build
+      - name: Print latest local change
+        run: |
+          git log -1 --pretty=format:"%h - %an, %ar : %s"
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -22,6 +25,9 @@ jobs:
       - name: Run tests
         run: |
           make test
+      - name: Print latest local change
+        run: |
+          git log -1 --pretty=format:"%h - %an, %ar : %s"
   package:
     runs-on: ubuntu-latest
     timeout-minutes: 2
@@ -32,6 +38,9 @@ jobs:
       - name: Build debian package
         run: |
           make build-deb
+      - name: Print latest local change
+        run: |
+          git log -1 --pretty=format:"%h - %an, %ar : %s"
   artifact:
     runs-on: ubuntu-latest
     timeout-minutes: 2
