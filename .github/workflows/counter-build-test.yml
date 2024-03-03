@@ -1,7 +1,7 @@
 name: Systemd Counter Debian Packaging
-permissions:
-  contents: read
-  packages: write
+# permissions:
+#   contents: read
+#   packages: write
 on: [push]
 jobs:
   build:
