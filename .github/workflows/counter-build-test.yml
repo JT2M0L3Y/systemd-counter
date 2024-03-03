@@ -1,5 +1,7 @@
 name: Systemd Counter Debian Packaging
-# run-name: ${{ github.actor }} is testing out GitHub Actions 📯
+permissions:
+  contents: read
+  packages: write
 on: [push]
 jobs:
   build:
