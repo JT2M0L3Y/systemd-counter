@@ -1,5 +1,5 @@
 # Author: Jonathan Smoley (JT2M0L3Y)
-# Date: 2024-02-28
+# Date: 2024-03-03
 
 BINARY_NAME=counter
 OUT_FILE=/tmp/currentCount.out
@@ -19,7 +19,7 @@ clean:
 	[ -e bin/${BINARY_NAME} ] && rm bin/${BINARY_NAME} || true
 
 build-deb: build
-	./${BUILD_SCRIPT}
+	sh ${BUILD_SCRIPT}
 
-lint-deb:
-	lintian ${BINARY_NAME}-v2.0.0.deb	
+lint-deb: build-deb
+	-lintian ${BINARY_NAME}-v2.0.0.deb	

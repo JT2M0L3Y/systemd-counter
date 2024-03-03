@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-TEMP_DIR="temp"
+TEMP_DIR=temp
 
 echo "Starting deb package build"
 
@@ -28,6 +28,5 @@ chmod 0775 $TEMP_DIR/DEBIAN/postrm
 echo "Building deb file"
 dpkg-deb --root-owner-group --build $TEMP_DIR
 mv $TEMP_DIR.deb counter-v2.0.0.deb
-rm -rf $TEMP_DIR
 
 echo "Completed deb build."
