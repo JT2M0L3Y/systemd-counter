@@ -8,12 +8,24 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Build project
+      - name: Build binary
         run: |
           make build
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - name: Run tests
         run: |
           make test
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - name: Build debian package
         run: |
           make build-deb
@@ -23,6 +35,12 @@ jobs:
           name: counter-v2.0.0
           path: |
             counter-v2.0.0.deb
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - name: Lint debian package
         run: |
           -lintian counter-v2.0.0.deb
