@@ -4,6 +4,16 @@ permissions:
   packages: write
 on: [push]
 jobs:
+  perms:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Set up permissions
+        run: |
+          sudo chown -R $USER:$USER .
+          sudo chmod -R 755 .
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 2
