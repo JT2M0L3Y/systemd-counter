@@ -5,8 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Build binary
         run: |
           make build
@@ -14,8 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Run tests
         run: |
           make test
@@ -24,8 +22,7 @@ jobs:
     timeout-minutes: 2
     needs: build
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Build debian package
         run: |
           make build-deb
@@ -40,8 +37,7 @@ jobs:
     timeout-minutes: 2
     needs: package
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Install lintian
         run: |
           sudo apt-get install -y lintian
