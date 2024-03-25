@@ -14,18 +14,12 @@ jobs:
         with:
           go-version-file: 'go.mod'
           cache: true
-      - name: Print Go Location
-        run: |
-          whereis go
   test:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
     needs: dependencies
     steps:
       - uses: actions/checkout@v4
-      - name: Print working directory
-        run: |
-          pwd
       - name: Run tests
         run: |
           make test
@@ -35,9 +29,6 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v4
-      - name: Print working directory
-        run: |
-          pwd
       - name: Build binary
         run: |
           make build
