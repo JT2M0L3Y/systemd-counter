@@ -9,20 +9,14 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get install -y build-essential
-  setup-go:
-    runs-on: [self-hosted, linux, x64, CPSC334]
-    timeout-minutes: 2
-    needs: dependencies
-    steps:
-      - uses: actions/checkout@v4
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.22.0
+          go-version: 1.22.0    
   build:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
-    needs: [setup-go]
+    needs: dependencies
     steps:
       - uses: actions/checkout@v4
       - name: Build binary
