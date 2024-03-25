@@ -1,0 +1,46 @@
+name: Systemd Counter Debian Packaging
+on: [push]
+jobs:
+  build:
+    runs-on: [self-hosted, linux, CPSC334]
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build binary
+        run: |
+          make build
+  test:
+    runs-on: [self-hosted, linux, CPSC334]
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: |
+          make test
+  package:
+    runs-on: [self-hosted, linux, CPSC334]
+    timeout-minutes: 2
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build debian package
+        run: |
+          make build-deb
+      - name: Store debian package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-v2.0.0
+          path: |
+            counter-v2.0.0.deb
+  lint:
+    runs-on: [self-hosted, linux, CPSC334]
+    timeout-minutes: 2
+    needs: package
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install lintian
+        run: |
+          sudo apt-get install -y lintian
+      - name: Lint debian package
+        run: |
+          make lint-deb
