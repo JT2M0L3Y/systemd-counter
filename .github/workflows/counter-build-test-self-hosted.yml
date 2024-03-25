@@ -13,10 +13,17 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
-          cache: true
-      - name: Display Go version
+  test:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    timeout-minutes: 2
+    needs: dependencies
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          cd ..
+      - name: Run tests
         run: |
-          go version
+          make test
   build:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
@@ -26,15 +33,6 @@ jobs:
       - name: Build binary
         run: |
           make build
-  test:
-    runs-on: [self-hosted, linux, x64, CPSC334]
-    timeout-minutes: 2
-    needs: dependencies
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run tests
-        run: |
-          make test
   package:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
