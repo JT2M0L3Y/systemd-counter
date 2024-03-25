@@ -13,6 +13,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.22.0
+      - name: Check Go version
         run: go version
   build:
     runs-on: [self-hosted, linux, x64, CPSC334]
