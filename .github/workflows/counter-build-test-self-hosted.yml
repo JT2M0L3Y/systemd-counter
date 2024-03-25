@@ -6,15 +6,16 @@ jobs:
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
-      - name: Install make
+      - name: Install build tools
         run: |
           sudo apt-get install -y build-essential
       - name: Install golang
         run: |
-          rm -rf /usr/local/go
-          curl -L -o go1.22.1.linux-amd64.tar.gz https://golang.org/dl/go1.22.1.linux-amd64.tar.gz
-          sudo tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
-          export PATH=$PATH:/usr/local/go/bin
+          # rm -rf /usr/local/go
+          # curl -L -o go1.22.1.linux-amd64.tar.gz https://golang.org/dl/go1.22.1.linux-amd64.tar.gz
+          # sudo tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
+          # export PATH=$PATH:/usr/local/go/bin
+          sudo apt-get install golang-go
           go version
   test:
     runs-on: [self-hosted, linux, x64, CPSC334]
