@@ -14,9 +14,9 @@ jobs:
         with:
           go-version-file: 'go.mod'
           cache: true
-      - name: Print working directory
+      - name: Print Go Location
         run: |
-          pwd
+          whereis go
   test:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
