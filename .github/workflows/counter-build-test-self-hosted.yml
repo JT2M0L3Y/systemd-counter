@@ -13,14 +13,13 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version-file: 'go.mod'
+          cache: true
   test:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
     needs: dependencies
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          cd ..
       - name: Run tests
         run: |
           make test
