@@ -2,7 +2,7 @@ name: Systemd Counter Debian Packaging
 on: [push]
 jobs:
   build:
-    runs-on: [self-hosted, linux, CPSC334]
+    runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
@@ -10,7 +10,7 @@ jobs:
         run: |
           make build
   test:
-    runs-on: [self-hosted, linux, CPSC334]
+    runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
         run: |
           make test
   package:
-    runs-on: [self-hosted, linux, CPSC334]
+    runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
     needs: build
     steps:
@@ -33,7 +33,7 @@ jobs:
           path: |
             counter-v2.0.0.deb
   lint:
-    runs-on: [self-hosted, linux, CPSC334]
+    runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
     needs: package
     steps:
