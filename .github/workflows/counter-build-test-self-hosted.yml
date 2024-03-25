@@ -1,6 +1,14 @@
 name: Systemd Counter Debian Packaging
 on: [push]
 jobs:
+  dependencies:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y make
   build:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
