@@ -6,10 +6,10 @@ OUT_FILE=/tmp/currentCount.out
 BUILD_SCRIPT=build-deb.sh
 
 build:
-	go build -o bin/${BINARY_NAME} ${BINARY_NAME}.go
+	GOARCH=amd64 GOOS=linux go build -o bin/${BINARY_NAME} ${BINARY_NAME}.go
 
 test:
-	go test -v ./...
+	GOARCH=amd64 GOO=linux go test -v ./...
 
 run: build
 	bin/${BINARY_NAME}
