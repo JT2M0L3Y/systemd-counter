@@ -6,14 +6,15 @@ jobs:
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
-      - name: Install dependencies
+      - name: Install make
         run: |
           sudo apt-get install -y build-essential
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: 'go.mod'
-          cache: true
+      - name: Install golang
+        run: |
+          rm -rf /usr/local/go
+          tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
+          export PATH=$PATH:/usr/local/go/bin
+          go version
   test:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
