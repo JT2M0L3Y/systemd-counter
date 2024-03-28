@@ -1,0 +1,49 @@
+name: Self-Hosted Counter Deployment
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  package:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build debian package
+        run: |
+          make build-deb
+      - name: Store debian package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-v2.0.0
+          path: |
+            counter-v2.0.0.deb
+  copy:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    timeout-minutes: 2
+    needs: package
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: counter-v2.0.0
+          path: /tmp
+      - name: copy package via ssh
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          source: counter-v2.0.0.deb
+          target: /tmp/counter-v2.0.0.deb
+  install:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    timeout-minutes: 2
+    needs: copy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install debian package
+        run: |
+          sudo dpkg -i /tmp/counter-v2.0.0.deb
+          sudo systemctl restart counter
+          sudo systemctl status counter

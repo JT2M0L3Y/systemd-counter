@@ -1,4 +1,4 @@
-name: Self-Hosted Counter BTPL
+name: Self-Hosted Counter Integration
 on: [push]
 jobs:
   dependencies:
@@ -48,6 +48,9 @@ jobs:
           name: counter-v2.0.0
           path: |
             counter-v2.0.0.deb
+      - name: List Contents
+        run: |
+          ls -l
   lint:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
