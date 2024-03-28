@@ -34,8 +34,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: counter-v2.0.0.deb
-          target: /tmp/counter-v2.0.0.deb
+          source: "counter-v2.0.0.deb"
+          target: "/tmp/"
   install:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
