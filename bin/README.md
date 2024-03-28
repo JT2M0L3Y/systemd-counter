@@ -1,7 +1,7 @@
 ## Binary or script directory
 
 #### About
-This is a binary compiled from **Go** that performs a number of actions that occur when its systemd service calls it into execution.
+This is a binary compiled from **Go** that performs a number of actions that occur when its systemd service executes it.
 
 #### Features
 - creates a file called `currentCount.out` in the `/tmp` directory for logging.
