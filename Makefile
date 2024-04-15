@@ -22,4 +22,7 @@ build-deb: build
 	sh ${BUILD_SCRIPT}
 
 lint-deb: build-deb
-	-lintian ${BINARY_NAME}-v2.0.0.deb	
+	-lintian ${BINARY_NAME}-v2.0.0.deb
+
+docker-image:
+	docker build -t ${BINARY_NAME}:latest .
