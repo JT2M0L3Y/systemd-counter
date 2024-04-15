@@ -1,22 +1,38 @@
-name: Systemd Counter Debian Packaging
+name: Self-Hosted Counter Integration
 on: [push]
 jobs:
-  build:
+  dependencies:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
-      - name: Build binary
+      - name: Install build tools
         run: |
-          make build
+          sudo apt-get install -y build-essential
+      - name: Install go from tarball
+        run: |
+          sudo rm -rf /usr/local/go ../go
+          curl -OL https://golang.org/dl/go1.22.1.linux-amd64.tar.gz
+          sudo tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
+          export PATH=$PATH:/usr/local/go/bin
   test:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
+    needs: dependencies
     steps:
       - uses: actions/checkout@v4
       - name: Run tests
         run: |
           make test
+  build:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    timeout-minutes: 2
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build binary
+        run: |
+          make build
   package:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
@@ -32,6 +48,9 @@ jobs:
           name: counter-v2.0.0
           path: |
             counter-v2.0.0.deb
+      - name: List Contents
+        run: |
+          ls -l
   lint:
     runs-on: [self-hosted, linux, x64, CPSC334]
     timeout-minutes: 2
