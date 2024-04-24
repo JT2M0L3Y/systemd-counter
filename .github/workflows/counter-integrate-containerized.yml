@@ -10,6 +10,9 @@ jobs:
       - name: Install test tools
         run: |
           apt-get update && apt-get install -y make golang
+      - name: Install go dependencies
+        run: |
+          go mod download
       - name: Run tests
         run: |
           make test
