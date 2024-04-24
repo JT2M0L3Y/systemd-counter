@@ -16,22 +16,22 @@ jobs:
       - name: Install test tools
         run: |
           apt-get update -q && apt-get install -y make
-      - name: Build binary
+      - name: Run binary
         run: |
-          make build
-      - name: Copy binary to gcp
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          source: "bin/counter"
-          target: /tmp/
-      - name: Run binary on gcp
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          script: |
-            /tmp/counter
+          make run
+      # - name: Copy binary to gcp
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     source: "bin/counter"
+      #     target: /tmp/
+      # - name: Run binary on gcp
+      #   uses: appleboy/ssh-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     script: |
+      #       /tmp/counter
