@@ -4,6 +4,15 @@
 BINARY_NAME=counter
 OUT_FILE=/tmp/currentCount.out
 BUILD_SCRIPT=build-deb.sh
+GOLANG_VERSION=1.22.2
+
+# install golang
+golang-install:
+	wget --progress=bar:force:noscroll \
+		https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz
+	tar -C /usr/local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz
+	rm go${GOLANG_VERSION}.linux-amd64.tar.gz
+	go version
 
 # build the binary
 build:

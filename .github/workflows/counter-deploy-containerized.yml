@@ -10,9 +10,16 @@ jobs:
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
-      - name: Install deploy tools
+      - name: Install test tools
         run: |
-          apt-get update && apt-get install -y make golang
+          apt-get update && apt-get install -y make wget
+      - name: Install golang
+        run: |
+          make golang-install
+          export PATH=$PATH:/usr/local/go/bin
+      - name: Install go dependencies
+        run: |
+          go mod download
       - name: Build binary
         run: |
           make build
