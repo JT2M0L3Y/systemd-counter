@@ -1,0 +1,31 @@
+name: Self-Hosted Counter Deployment
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    container: ubuntu:latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build binary
+        run: |
+          make build
+      - name: Copy binary to gcp
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          source: "bin/counter"
+          target: /tmp/
+      - name: Run binary on gcp
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            ./tmp/counter
