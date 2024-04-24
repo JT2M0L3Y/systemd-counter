@@ -1,5 +1,5 @@
 # Author: Jonathan Smoley (JT2M0L3Y)
-# Date: 2024-03-03
+# Date: 2024-04-24
 
 BINARY_NAME=counter
 OUT_FILE=/tmp/currentCount.out
@@ -23,6 +23,12 @@ build-deb: build
 
 lint-deb: build-deb
 	-lintian ${BINARY_NAME}-v2.0.0.deb
+
+install-deb: build-deb
+	sudo dpkg -i ${BINARY_NAME}-v2.0.0.deb
+
+remove-deb:
+	sudo dpkg -r ${BINARY_NAME}
 
 docker-image:
 	docker build -t ${BINARY_NAME}:latest .
