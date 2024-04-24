@@ -26,3 +26,6 @@ lint-deb: build-deb
 
 docker-image:
 	docker build -t ${BINARY_NAME}:latest .
+
+docker-container: docker-image
+	docker run -it ${BINARY_NAME}:latest

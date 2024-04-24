@@ -1,6 +1,3 @@
-# get golang from official image
-FROM golang:latest as go-src
-
 # set ubuntu base image
 FROM ubuntu:latest
 
@@ -10,12 +7,22 @@ WORKDIR /app
 # copy files
 COPY . .
 
-# install dependencies
+# install project dependencies
 RUN apt-get update && apt-get install -y make
-COPY --from=go-src /usr/local/go /usr/local/go
+RUN apt-get install -y lintian
 
-# set go path
+# install go
+RUN rm -rf /usr/local/go ../go
+RUN apt-get install -y wget
+RUN wget https://golang.org/dl/go1.22.1.linux-amd64.tar.gz
+
+# extract go
+RUN tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
+RUN rm go1.22.1.linux-amd64.tar.gz
 ENV PATH=$PATH:/usr/local/go/bin
 
-# run application
-CMD ["make", "build-deb"]
+# install go dependencies
+RUN go mod download
+
+# package build
+# CMD ["make", "build-deb"]
