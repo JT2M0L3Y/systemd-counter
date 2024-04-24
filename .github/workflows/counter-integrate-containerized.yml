@@ -1,31 +1,15 @@
 name: Self-Hosted Counter Integration
 on: [push]
 jobs:
-  dependencies:
-    runs-on: [self-hosted, linux, x64, CPSC334]
-    container: ubuntu:latest
-    timeout-minutes: 2
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install golang download tools
-        run: |
-          apt-get install -y wget
-      - name: Install go from tarball
-        run: |
-          rm -rf /usr/local/go ../go
-          wget https://golang.org/dl/go1.22.2.linux-amd64.tar.gz
-          tar -C /usr/local -xzf go1.22.2.linux-amd64.tar.gz
-          export PATH=$PATH:/usr/local/go/bin
   test:
     runs-on: [self-hosted, linux, x64, CPSC334]
     container: ubuntu:latest
     timeout-minutes: 2
-    needs: dependencies
     steps:
       - uses: actions/checkout@v4
       - name: Install test tools
         run: |
-          apt-get install -y make
+          apt-get update && apt-get install -y make golang
       - name: Run tests
         run: |
           make test
@@ -38,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install build tools
         run: |
-          apt-get install -y make
+          apt-get update && apt-get install -y make golang
       - name: Build binary
         run: |
           make build
