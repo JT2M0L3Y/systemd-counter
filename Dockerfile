@@ -1,6 +1,9 @@
 # set ubuntu base image
 FROM ubuntu:latest
 
+# arguments
+ARG GOLANG_VERSION=1.22.2
+
 # set working directory
 WORKDIR /app
 
@@ -8,17 +11,20 @@ WORKDIR /app
 COPY . .
 
 # install project dependencies
-RUN apt-get update && apt-get install -y make
-
-# install go
-RUN rm -rf /usr/local/go ../go
+RUN apt-get update
+RUN apt-get install -y make
 RUN apt-get install -y wget
-RUN wget https://golang.org/dl/go1.22.1.linux-amd64.tar.gz
 
-# extract go
-RUN tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
-RUN rm go1.22.1.linux-amd64.tar.gz
+# download go
+RUN rm -rf /usr/local/go ../go
+RUN wget https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz
+
+# extract go, set path
+RUN tar -C /usr/local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz
 ENV PATH=$PATH:/usr/local/go/bin
 
-# package build
+# cleanup
+RUN rm go1.22.*
+
+# run golang binary
 CMD ["make", "run"]
