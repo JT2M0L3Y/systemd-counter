@@ -10,6 +10,9 @@ jobs:
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
+      - name: Install test tools
+        run: |
+          apt-get install -y make
       - name: Build binary
         run: |
           make build
@@ -28,4 +31,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            ./tmp/counter
+            /tmp/counter
