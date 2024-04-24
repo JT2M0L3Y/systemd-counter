@@ -7,16 +7,12 @@ jobs:
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
-      - name: Install test tools
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.2
+      - name: Install make
         run: |
-          apt-get update && apt-get install -y make wget
-      - name: Install golang
-        run: |
-          make golang-install
-          export PATH=$PATH:/usr/local/go/bin
-      - name: Install go dependencies
-        run: |
-          go mod download
+          apt-get update -q && apt-get install -y make
       - name: Run tests
         run: |
           make test
@@ -27,16 +23,12 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v4
-      - name: Install test tools
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.2
+      - name: Install make
         run: |
-          apt-get update && apt-get install -y make wget
-      - name: Install golang
-        run: |
-          make golang-install
-          export PATH=$PATH:/usr/local/go/bin
-      - name: Install go dependencies
-        run: |
-          go mod download
+          apt-get update -q && apt-get install -y make
       - name: Build binary
         run: |
           make build
