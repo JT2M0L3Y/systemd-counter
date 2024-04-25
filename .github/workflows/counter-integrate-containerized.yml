@@ -4,7 +4,7 @@ jobs:
   test:
     runs-on: [self-hosted, linux, x64, CPSC334]
     container: ubuntu:latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: [self-hosted, linux, x64, CPSC334]
     container: ubuntu:latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     needs: test
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
   package:
     runs-on: [self-hosted, linux, x64, CPSC334]
     container: ubuntu:latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
   lint:
     runs-on: [self-hosted, linux, x64, CPSC334]
     container: ubuntu:latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     needs: package
     steps:
       - uses: actions/checkout@v4

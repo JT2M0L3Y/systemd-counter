@@ -7,7 +7,7 @@ jobs:
   deploy:
     runs-on: [self-hosted, linux, x64, CPSC334]
     container: ubuntu:latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
