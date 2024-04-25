@@ -6,10 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: [self-hosted, linux, x64, CPSC334]
-    container:
-      image: ubuntu:latest
-      volumes:
-        - .:/tmp
+    container: ubuntu:latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
