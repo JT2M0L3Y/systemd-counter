@@ -32,3 +32,35 @@ jobs:
       - name: Build binary
         run: |
           make build
+  package:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    container: ubuntu:latest
+    timeout-minutes: 2
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install make
+        run: |
+          apt-get update -q && apt-get install -y make
+      - name: Build debian package
+        run: |
+          make build-deb
+      - name: Store debian package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: counter-v2.0.0
+          path: |
+            counter-v2.0.0.deb
+  lint:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    container: ubuntu:latest
+    timeout-minutes: 2
+    needs: package
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install linting tools
+        run: |
+          apt-get update -q && apt-get install -y make lintian
+      - name: Lint debian package
+        run: |
+          make lint-deb
