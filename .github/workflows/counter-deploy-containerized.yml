@@ -6,7 +6,10 @@ on:
 jobs:
   deploy:
     runs-on: [self-hosted, linux, x64, CPSC334]
-    container: ubuntu:latest
+    container:
+      image: ubuntu:latest
+      volumes:
+        - .:/tmp
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
@@ -16,14 +19,14 @@ jobs:
       - name: Build debian package
         run: |
           make build-deb
-      - name: Copy debian package to gcp
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          source: "counter-v2.0.0.deb"
-          target: /tmp/
+      # - name: Copy debian package to gcp
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     source: "counter-v2.0.0.deb"
+      #     target: /tmp/
       - name: Install debian package on gcp
         uses: appleboy/ssh-action@v1.0.3
         with:

@@ -46,7 +46,7 @@ remove-deb:
 docker-image:
 	docker build -t ${BINARY_NAME}:latest .
 
-# run the docker container in the background
+# run the docker image and mount the /tmp directory
 docker-run:
 	docker run --rm --mount type=bind,source=/tmp,target=/tmp ${BINARY_NAME}:latest
 
