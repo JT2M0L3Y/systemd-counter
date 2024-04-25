@@ -1,8 +1,14 @@
 name: Self-Hosted Counter Deployment
 on:
-  push:
+  workflow_run:
+    workflows: ["Self-Hosted Counter Integration"]
+    types:
+      - completed
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
+  # push:
+  #   tags:
+  #     - "v[0-9]+.[0-9]+.[0-9]+"
 jobs:
   deploy:
     runs-on: [self-hosted, linux, x64, CPSC334]
@@ -16,19 +22,7 @@ jobs:
       - name: Install run tools
         run: |
           apt-get update -q && apt-get install -y make
-      # - name: Copy binary to gcp
-      #   uses: appleboy/scp-action@v0.1.7
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     source: "bin/counter"
-      #     target: /tmp/
-      - name: Run binary on gcp
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          script: |
-            make run
+      - name: Run binary
+        run: |
+          make run &
+          ps aux | grep counter

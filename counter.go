@@ -85,7 +85,6 @@ func createFile(name string) *os.File {
 
 func writeData(file *os.File, usr string, dateTime string, counter int) {
 	_, err := file.WriteString(fmt.Sprintf("%s: %s #%d\n", usr, dateTime, counter))
-	fmt.Printf("%s: %s #%d\n", usr, dateTime, counter)
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
 		syscall.Exit(1)
