@@ -10,20 +10,23 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.2
       - name: Install run tools
         run: |
-          apt-get update -qq && apt-get install -qq -y make  
+          apt-get update -qq && apt-get install -qq -y make
       - name: Build debian package
         run: |
           make build-deb
-      # - name: Copy debian package to gcp
-      #   uses: appleboy/scp-action@v0.1.7
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     source: "counter-v2.0.0.deb"
-      #     target: /tmp/
+      - name: Copy debian package to gcp
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          source: "counter-v2.0.0.deb"
+          target: /tmp/
       - name: Install debian package on gcp
         uses: appleboy/ssh-action@v1.0.3
         with:
