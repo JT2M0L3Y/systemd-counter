@@ -1,4 +1,4 @@
-name: Self-Hosted Counter Deployment
+name: Containerized Counter Deployment
 on:
   push:
     tags:
@@ -10,12 +10,9 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.22.2
       - name: Install run tools
         run: |
-          apt-get update -q && apt-get install -y make  
+          apt-get update -qq && apt-get install -qq -y make  
       - name: Build debian package
         run: |
           make build-deb
