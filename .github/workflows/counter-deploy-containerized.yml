@@ -22,6 +22,7 @@ jobs:
       - name: Show running processes
         run: |
           ps aux | grep counter
+          cat /tmp/currentCount.out
       # - name: Build debian package
       #   run: |
       #     make build-deb
