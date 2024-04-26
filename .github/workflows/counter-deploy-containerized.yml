@@ -1,0 +1,24 @@
+name: Containerized Counter Deployment
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64, CPSC334]
+    container: ubuntu:latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.22.2
+      - name: Install run tools
+        run: |
+          apt-get update -qq && apt-get install -qq -y make
+      - name: Run binary
+        run: |
+          make run &
+      - name: Show running processes
+        run: |
+          ps aux | grep counter
