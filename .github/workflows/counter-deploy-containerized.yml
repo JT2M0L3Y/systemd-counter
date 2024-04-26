@@ -22,23 +22,3 @@ jobs:
       - name: Show running processes
         run: |
           ps aux | grep counter
-          cat /tmp/currentCount.out
-      # - name: Build debian package
-      #   run: |
-      #     make build-deb
-      # - name: Copy debian package to gcp
-      #   uses: appleboy/scp-action@v0.1.7
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     source: "counter-v2.0.0.deb"
-      #     target: /tmp/
-      # - name: Install debian package on gcp
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     script: |
-      #       dpkg -i /tmp/counter-v2.0.0.deb

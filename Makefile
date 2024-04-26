@@ -48,7 +48,7 @@ docker-image:
 
 # run the docker image and mount the /tmp directory
 docker-run:
-	docker run --rm --mount type=bind,source=/tmp,target=/tmp ${BINARY_NAME}:latest
+	docker run --rm -d --mount type=bind,source=/tmp,target=/tmp ${BINARY_NAME}:latest
 
 # remove all those dangling images
 docker-prune:

@@ -1,6 +1,9 @@
 # set ubuntu base image
 FROM ubuntu:latest
 
+# set arguments
+ARG GOLANG_VERSION=1.22.2
+
 # set working directory
 WORKDIR /app
 
@@ -19,7 +22,7 @@ RUN tar -C /usr/local -xzf go${GOLANG_VERSION}.linux-amd64.tar.gz
 ENV PATH=$PATH:/usr/local/go/bin
 
 # cleanup
-RUN rm go1.22.*
+RUN rm go${GOLANG_VERSION}.linux-amd64.tar.gz
 
 # run golang binary
 CMD ["make", "run"]
