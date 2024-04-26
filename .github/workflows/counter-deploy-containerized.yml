@@ -18,7 +18,10 @@ jobs:
           apt-get update -qq && apt-get install -qq -y make
       - name: Run binary
         run: |
-          make run
+          make run &
+      - name: Show running processes
+        run: |
+          ps aux | grep counter
       # - name: Build debian package
       #   run: |
       #     make build-deb
