@@ -2,7 +2,7 @@
 FROM ubuntu:25.10
 
 # set arguments
-ARG GOLANG_VERSION=1.22.2
+ARG GOLANG_VERSION=1.24.4
 
 # set working directory
 WORKDIR /app
