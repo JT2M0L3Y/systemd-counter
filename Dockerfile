@@ -1,5 +1,5 @@
 # set ubuntu base image
-FROM ubuntu:25.04
+FROM ubuntu:25.10
 
 # set arguments
 ARG GOLANG_VERSION=1.22.2
